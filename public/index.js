@@ -26,11 +26,11 @@ const requestComplete = function() {
 }
 
 const populateList = function(countries) {
-  const ul = document.querySelector('#country-list');
+  const select = document.querySelector('select');
   countries.forEach(function(country) {
-    const li = document.createElement('li');
-    li.innerText = country.name;
-    ul.appendChild(li);
+    const option = document.createElement('option');
+    option.innerText = country.name;
+    select.appendChild(option);
   });
 }
 
