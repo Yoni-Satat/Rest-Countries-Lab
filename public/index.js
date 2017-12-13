@@ -14,6 +14,10 @@ const app = function () {
     const selectedIndex = this.value;
     countryInfo(countries[selectedIndex]);
   });
+
+  const jsonString = localStorage.getItem('country');
+  let savedCountry = JSON.parse(jsonString);
+  countryInfo(savedCountry);
 }
 
 const makeRequest = function(url, callback) {
@@ -58,6 +62,8 @@ const countryInfo = function(country) {
   tr.appendChild(name);
   tr.appendChild(capital);
   tr.appendChild(population);
+  const jsonString = JSON.stringify(country);
+  localStorage.setItem('country', jsonString);
 }
 
 
