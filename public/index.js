@@ -3,10 +3,8 @@ let countries = [];
 const app = function () {
   const url = 'https://restcountries.eu/rest/v2/all';
 
-  const button = document.querySelector('#show-countries');
-  button.addEventListener('click', function(thing) {
-    makeRequest(url, requestComplete);
-  });
+  // const button = document.querySelector('#show-countries');
+  makeRequest(url, requestComplete);
 
   const select = document.querySelector('select');
   select.addEventListener('change', function() {
@@ -15,9 +13,7 @@ const app = function () {
     countryInfo(countries[selectedIndex]);
   });
 
-  const jsonString = localStorage.getItem('country');
-  let savedCountry = JSON.parse(jsonString);
-  countryInfo(savedCountry);
+
 }
 
 const makeRequest = function(url, callback) {
@@ -36,6 +32,10 @@ const requestComplete = function() {
   countries = JSON.parse(jsonString);
   // console.log(countries);
   populateList(countries);
+
+  const storedJsonString = localStorage.getItem('country');
+  let savedCountry = JSON.parse(storedJsonString);
+  countryInfo(savedCountry);
 }
 
 const populateList = function(countries) {
@@ -59,11 +59,31 @@ const countryInfo = function(country) {
   capital.innerText = country.capital;
   const population = document.createElement('td');
   population.innerText = country.population;
+  const borders = document.createElement('td');
+  borders.innerText = getBorderingCountries(country);
+
   tr.appendChild(name);
   tr.appendChild(capital);
   tr.appendChild(population);
+  tr.appendChild(borders);
+
+
   const jsonString = JSON.stringify(country);
   localStorage.setItem('country', jsonString);
+}
+
+const getBorderingCountries = function(country) {
+  const bords = country.borders;
+  let returnString = "";
+  for (code of bords) {
+    for (country of countries) {
+      if (country.alpha3Code === code) {
+        returnString += country.name + ", ";
+      }
+    }
+  }
+  return returnString;
+
 }
 
 
