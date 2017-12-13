@@ -59,31 +59,46 @@ const countryInfo = function(country) {
   capital.innerText = country.capital;
   const population = document.createElement('td');
   population.innerText = country.population;
-  const borders = document.createElement('td');
-  borders.innerText = getBorderingCountries(country);
 
   tr.appendChild(name);
   tr.appendChild(capital);
   tr.appendChild(population);
-  tr.appendChild(borders);
 
-
+  const borderingCountries = getBorderingCountries(country);
+  borderInfo(borderingCountries);
   const jsonString = JSON.stringify(country);
   localStorage.setItem('country', jsonString);
 }
 
 const getBorderingCountries = function(country) {
   const bords = country.borders;
-  let returnString = "";
+  let returnArray = [];
   for (code of bords) {
     for (country of countries) {
       if (country.alpha3Code === code) {
-        returnString += country.name + ", ";
+        returnArray.push(country);
       }
     }
   }
-  return returnString;
+  return returnArray;
+}
 
+const borderInfo = function(countryArray) {
+  let borderTable = document.querySelector('#borders')
+  borderTable.innerHTML = '';
+  for (country of countryArray) {
+    let newRow = document.createElement('tr');
+    let name = document.createElement('td');
+    name.innerText = country.name;
+    let capital = document.createElement('td');
+    capital.innerText = country.capital;
+    let population = document.createElement('td');
+    population.innerText = country.population;
+    newRow.appendChild(name);
+    newRow.appendChild(capital);
+    newRow.appendChild(population);
+    borderTable.appendChild(newRow);
+  }
 }
 
 
