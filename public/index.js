@@ -45,19 +45,19 @@ const populateList = function(countries) {
 }
 
 const countryInfo = function(country) {
-  const ul = document.querySelector('ul');
+  const tr = document.querySelector('#info');
 
-  ul.innerHTML = '';
+  tr.innerHTML = '';
 
-  const name = document.createElement('li');
+  const name = document.createElement('td');
   name.innerText = country.name;
-  const capital = document.createElement('li');
+  const capital = document.createElement('td');
   capital.innerText = country.capital;
-  const population = document.createElement('li');
+  const population = document.createElement('td');
   population.innerText = country.population;
-  ul.appendChild(name);
-  ul.appendChild(capital);
-  ul.appendChild(population);
+  tr.appendChild(name);
+  tr.appendChild(capital);
+  tr.appendChild(population);
 }
 
 
